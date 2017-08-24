@@ -259,3 +259,18 @@ to put the erlang-crypto2 `ebin` folder at the front of the load path.
 the erlang-crypto2 app is loaded it uses an `on_load` function to load the
 crypto NIFs. We could not figure out how to specify the correct `priv` folder
 except by hardcoding it into this environment variable.
+
+## Keys table is the only source of truth for public\_key
+
+Phase1:
+Add a function for add\_user and update\_user that inserts only the sentinel
+value into the public\_key field in the users table.
+The add and update triggers in keys\_update\_trigger.sql are present to maintain
+compatibility with older versions of chef-server.
+
+Phase2:
+Delete the and and update triggers in keys\_update\_trigger.sql.
+Delete the public\_key column in users (and perhaps clients) table.
+This should be easier once all the users are on Phase1 release of chef-server.
+The code will then only interact with the add\_user and update\_user functions in
+the back.
