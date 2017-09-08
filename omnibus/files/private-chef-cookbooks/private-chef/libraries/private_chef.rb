@@ -507,6 +507,7 @@ EOF
         {group: "keepalived", name: "vrrp_instance_password", length: 100},
         {group: "opscode_erchef", name: "sql_password", length: 60},
         {group: "opscode_erchef", name: "sql_ro_password", length: 60},
+        {group: "opscode_erchef", name: "stats_password", lendth: 100},
         {group: "oc_bifrost", name: "superuser_id", length: 32, frozen: true},
         {group: "oc_bifrost", name: "sql_password", length: 100},
         {group: "oc_bifrost", name: "sql_ro_password", length: 100},
@@ -521,8 +522,7 @@ EOF
 
       optional_secrets = [
         {group: "ldap", name: "bind_password"},
-        {group: "data_collector", name: "token"},
-        {group: "opscode_erchef", name: "stats_password"}
+        {group: "data_collector", name: "token"}
       ]
 
       optional_secrets.each do |secret|
@@ -645,14 +645,6 @@ WARN
         gen_api_fqdn
       else
         raise "I dont have a role for you! Use 'backend' or 'frontend'."
-      end
-    end
-
-    def ensure_stats_password
-      return unless PrivateChef["opscode_erchef"]["stats_user"]
-      unless credentials.exist?("opscode_erchef", "stats_password")
-        raise "Missing required password for admin user when enabling HTTP Basic Auth for stats endopoint\n"\
-          "\tUse `chef-server-ctl set-secret opscode_erchef stats_password` to set your password."
       end
     end
 
@@ -841,7 +833,6 @@ EOF
       generate_config_for_topology(PrivateChef["topology"], node_name)
 
       gen_ldap if PrivateChef["ldap"]["enabled"]
-      ensure_stats_password
       generate_hash
     end
   end

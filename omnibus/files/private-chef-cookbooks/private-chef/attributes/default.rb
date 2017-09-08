@@ -402,7 +402,8 @@ default['private_chef']['opscode-erchef']['ssl_session_caching']['enabled'] = fa
 default['private_chef']['opscode-erchef']['health_ping_timeout'] = 400
 
 # Stats endpoint
-default['private_chef']['opscode-erchef']['stats_user'] = nil
+default['private_chef']['opscode-erchef']['stats_auth_enable'] = true
+default['private_chef']['opscode-erchef']['stats_user'] = "statsuser"
 default['private_chef']['opscode-erchef']['stats_password_file'] = "/var/opt/opscode/nginx/stats_htpasswd"
 
 ###

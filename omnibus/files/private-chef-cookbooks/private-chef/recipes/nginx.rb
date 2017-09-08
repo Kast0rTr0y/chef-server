@@ -169,22 +169,23 @@ lbconf = node['private_chef']['lb'].to_hash.merge(nginx_vars).merge(
   end
 end
 
-if node['private_chef']['opscode-erchef']['stats_user']
+stats_passwd_file = node['private_chef']['opscode-erchef']['stats_password_file']
+if node['private_chef']['opscode-erchef']['stats_auth_enable']
   stats_api_passwd = PrivateChef.credentials.get('opscode_erchef', 'stats_password')
-  stats_passwd_file = node['private_chef']['opscode-erchef']['stats_password_file']
-
-  execute 'stats_api_append_password' do
-    command "openssl passwd -apr1 '#{stats_api_passwd}' >> #{stats_passwd_file}"
-    action :nothing
-    sensitive true
-  end
+  stats_api_passwd_hash = OmnibusHelper.new(node).apr1_password(stats_api_passwd)
 
   file stats_passwd_file do
-    content "#{node['private_chef']['opscode-erchef']['stats_user']}:"
+    content "#{node['private_chef']['opscode-erchef']['stats_user']}:#{stats_api_passwd_hash}"
     mode '0400'
     owner OmnibusHelper.new(node).ownership['owner']
     group OmnibusHelper.new(node).ownership['group']
-    notifies :run, 'execute[stats_api_append_password]', :immediately
+    sensitive true
+    notifies :restart, 'runit_service[nginx]' unless backend_secondary?
+  end
+elsif stats_passwd_file
+  file stats_passwd_file do
+    action :delete
+    notifies :restart, 'runit_service[nginx]' unless backend_secondary?
   end
 end
 

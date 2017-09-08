@@ -145,7 +145,7 @@
 
     # erchef stats endpoint
     location ~ "^/_stats/?$" {
-      <% if node['private_chef']['opscode-erchef']['stats_user'] -%>
+      <% if node['private_chef']['opscode-erchef']['stats_auth_enable'] -%>
       auth_basic "Chef Server Admin Stats";
       auth_basic_user_file <%= node['private_chef']['opscode-erchef']['stats_password_file'] %>;
       <% end -%>
