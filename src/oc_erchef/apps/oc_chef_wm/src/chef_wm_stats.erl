@@ -33,10 +33,9 @@
          to_text/2]).
 
 -include_lib("webmachine/include/webmachine.hrl").
--define(A2B(X), erlang:atom_to_binary(X, utf8)).
 
 init(_Any) ->
-    {ok, <<"{}">>}.
+    {ok, []}.
 
 allowed_methods(Req, State) ->
     {['GET'], Req, State}.
