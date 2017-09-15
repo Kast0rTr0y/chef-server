@@ -26,7 +26,8 @@ GIT
 
 GIT
   remote: https://github.com/chef/omnibus-software
-  revision: 1cc03db3825b13b377fb9e607a38c03daf78ddc4
+  revision: 9cf83ee81873826e50e5c344d2fdd0cf5bee9fe5
+  branch: ssd/perl-clutching-patch
   specs:
     omnibus-software (4.0.0)
       chef-sugar (>= 3.4.0)
@@ -43,13 +44,13 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     awesome_print (1.8.0)
-    aws-sdk (2.10.45)
-      aws-sdk-resources (= 2.10.45)
-    aws-sdk-core (2.10.45)
+    aws-sdk (2.10.46)
+      aws-sdk-resources (= 2.10.46)
+    aws-sdk-core (2.10.46)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.10.45)
-      aws-sdk-core (= 2.10.45)
+    aws-sdk-resources (2.10.46)
+      aws-sdk-core (= 2.10.46)
     aws-sigv4 (1.0.2)
     berkshelf (6.3.1)
       buff-config (~> 2.0)
