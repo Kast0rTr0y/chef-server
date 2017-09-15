@@ -26,7 +26,7 @@ GIT
 
 GIT
   remote: https://github.com/chef/omnibus-software
-  revision: 9cf83ee81873826e50e5c344d2fdd0cf5bee9fe5
+  revision: b83e4cd142a45f007a1a50bb33ae1ca8fb68c71d
   branch: ssd/perl-clutching-patch
   specs:
     omnibus-software (4.0.0)
